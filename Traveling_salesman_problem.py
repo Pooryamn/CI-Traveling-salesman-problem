@@ -70,7 +70,7 @@ def Initialization(Data,Populution_size):
         # add sample to populaion 
         population.append(Sample)
 
-        return population
+    return population
 
 # main
 
@@ -84,6 +84,7 @@ Data = []
 
 Read_data()
 population = Initialization(Data,Populution_size)
+
 
 
 
