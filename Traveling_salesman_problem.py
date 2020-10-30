@@ -1,4 +1,5 @@
 import csv
+import random
 
 ########## <-Fuctions-> #########
 def Read_data():
@@ -40,16 +41,49 @@ def Check_Duplicate_item(Sample):
     return True
 
 
+def Initialization(Data,Populution_size):
+
+    # sample sizes
+    Each_Sample_size = len(Data[0])
+
+    population = []
+
+    # main loop for generating samples
+    for i in range(Populution_size):
+        # empty sample
+        Sample = []
+        # generate sample 
+        for j in range(Each_Sample_size):
+            Sample.append(j+1)
+        
+        # number of modifications:
+        Modifications = random.randint(1,30)
+
+        # do modifications
+        for j in range(Modifications):
+            Tmp_Position1 = random.randint(0,Each_Sample_size-1)
+            Tmp_Position2 = random.randint(0,Each_Sample_size-1)
+
+            #swap indexes:
+            Sample[Tmp_Position1],Sample[Tmp_Position2] = Sample[Tmp_Position2],Sample[Tmp_Position1]
+        
+        # add sample to populaion 
+        population.append(Sample)
+
+        return population
+
 # main
 
 # Parameters: 
+
 Max_iteration = 1000
-Populution_size = 100
+Populution_size = 5
 
 # data
 Data = []
 
 Read_data()
+population = Initialization(Data,Populution_size)
 
 
 
