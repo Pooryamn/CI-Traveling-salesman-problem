@@ -1,6 +1,15 @@
 import csv
 
 ########## <-Fuctions-> #########
+def Read_data():
+    with open('Sample_Data.csv',mode='r') as DFile:
+        CSV_File = csv.reader(DFile,delimiter=',')
+
+        for row in CSV_File:
+            Data.append(row)
+    
+    DFile.close()
+
 def Fitness(Sample):
     # Avoid repeating one city twice in the solution
     if (Check_Duplicate_item(Sample)==True):
@@ -24,20 +33,25 @@ def Fitness(Sample):
     Fit_Value = 1.0 / Route_Cost
     return Fit_Value
 
+
 def Check_Duplicate_item(Sample):
     if len(Sample) == len(set(Sample)):
         return False
     return True
 
-Data = []
 
-with open('Sample_Data.csv',mode='r') as DFile:
-    CSV_File = csv.reader(DFile,delimiter=',')
-
-    for row in CSV_File:
-        Data.append(row)
+# main
 
 # Parameters: 
 Max_iteration = 1000
 Populution_size = 100
+
+# data
+Data = []
+
+Read_data()
+
+
+
+
 
