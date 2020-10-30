@@ -11,6 +11,12 @@ def Read_data():
     
     DFile.close()
 
+def Data_converter(Data):
+    for i in range(len(Data[0])):
+        for j in range(len(Data[0])) :
+            Data[i][j] = int(Data[i][j])
+    return Data
+
 def Fitness(Sample):
     # Avoid repeating one city twice in the solution
     if (Check_Duplicate_item(Sample)==True):
@@ -18,20 +24,20 @@ def Fitness(Sample):
         return 0
     # Avoid setting two citys next to each other
         for i in range(len(Sample)-2):
-            if (Data[sample[i]][Sample[i+1]] == -1): 
+            if (Data[sample[i]-1][Sample[i+1]-1] == -1): 
                 # There isn't any direct route between city(i) and city(i+1)
                 return 0
-        if (Data[Sample[-1]][Sample[0]] == -1):
+        if (Data[Sample[-1]-1][Sample[0]-1] == -1):
             return 0
     
     # Sample is feasible and we can calculate its fitness:
     Route_Cost = 0
     for i in range(len(Sample)-2):
-        Route_Cost += Data[Sample[i]][Sample[i+1]]
+        Route_Cost += Data[Sample[i]-1][Sample[i+1]-1]
     
-    Route_Cost += Data[Sample[-1]][Sample[0]]
+    Route_Cost += Data[Sample[-1]-1][Sample[0]-1]
 
-    Fit_Value = 1.0 / Route_Cost
+    Fit_Value = 1000.0 / Route_Cost
     return Fit_Value
 
 
@@ -81,10 +87,11 @@ Populution_size = 5
 
 # data
 Data = []
-
 Read_data()
-population = Initialization(Data,Populution_size)
+Data = Data_converter(Data)
 
+# Algorithm
+population = Initialization(Data,Populution_size)
 
 
 
