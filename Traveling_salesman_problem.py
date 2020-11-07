@@ -78,12 +78,65 @@ def Initialization(Data,Populution_size):
 
     return population
 
+def TSP(populaion,fitness_arr,Max_iteration):
+
+
+    each_population_size = len(populaion[0])
+
+    for i in range(Max_iteration):
+        
+        # Cross over
+        children = []
+        next_generation = []
+
+        for j in range(500):
+            par1 = random.choice(populaion)
+            par2 = random.choice(populaion)
+            tmp = par1[0:int(each_population_size/2)] + par2[int(each_population_size/2):]
+            children.append(tmp)
+        
+        # mutation
+
+        mutation_thershold = int(0.05 * len(populaion[0]))
+
+        for chid in children:
+
+            for j in range(mutation_thershold):
+                
+                index1 = random.randint(0,each_population_size-1)
+                index2 = random.randint(0,each_population_size-1)
+
+                #swap indexes:
+                chid[index1],chid[index2] = chid[index2],chid[index1]
+
+        # calculate fitness and remove 0 fitnesses
+        for k in children:
+            a = Fitness(k)
+            if (a > 0):
+                next_generation.append(k)
+
+        populaion = []
+        populaion = next_generation
+
+    fitness_arr = []
+
+    for i in populaion:
+        fitness_arr.append(Fitness(i))
+    
+    p=fitness_arr.index(max(fitness_arr))
+    cost = int(1000 / fitness_arr[p])
+    path = population[p]
+
+    print('Path : {}'.format(path))
+    print('Cost : {}'.format(cost))
+    print('Fitness : {}'.format(fitness_arr[p]))
+
 # main
 
 # Parameters: 
 
 Max_iteration = 1000
-Populution_size = 5
+Populution_size = 100
 
 # data
 Data = []
@@ -93,7 +146,11 @@ Data = Data_converter(Data)
 # Algorithm
 population = Initialization(Data,Populution_size)
 
+# evaluate fitness for inial population:
 
+fitness_arr = []
 
+for sample in population:
+    fitness_arr.append(Fitness(sample))
 
-
+TSP(population,fitness_arr,Max_iteration)
